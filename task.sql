@@ -2,26 +2,28 @@ CREATE DATABASE IF NOT EXISTS ShopDB;
 USE ShopDB;
 
 CREATE TABLE GeoIPCache (
-    ID INT,
-    IPRange VARCHAR(50),
-    CountryID INT
+    ID INT NOT NULL,
+    IPRange VARCHAR(50) NOT NULL,
+    CountryID INT NOT NULL,
+    PRIMARY KEY (ID)
 ) ENGINE=MEMORY;
 
 CREATE TABLE ProductDescription (
-    ID INT,
-    Description VARCHAR(255),
-    ProductID INT,
-    CountryID INT
+    ID INT NOT NULL,
+    Description TEXT NOT NULL,
+    ProductID INT NOT NULL,
+    CountryID INT NOT NULL,
+    PRIMARY KEY (ID)
 ) ENGINE=InnoDB;
 
 CREATE TABLE Logs (
-    ID INT,
-    Timestamp DATETIME,
-    Message VARCHAR(255)
+    ID INT NOT NULL,
+    Timestamp TIMESTAMP NOT NULL,
+    Message TEXT NOT NULL
 ) ENGINE=BLACKHOLE;
 
 CREATE TABLE ProductReporting (
     Date DATE NOT NULL,
-    ProductName VARCHAR(100) NOT NULL,
+    ProductName VARCHAR(50) NOT NULL,
     Orders INT NOT NULL
 ) ENGINE=CSV;
