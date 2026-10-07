@@ -2,39 +2,40 @@
 CREATE DATABASE IF NOT EXISTS ShopDB;
 USE ShopDB;
 
--- Воссоздаем предустановленную таблицу Countries (указана в условии задачи),
--- так как база данных создается заново
+-- Воссоздаем предустановленную таблицу Countries из условия
 CREATE TABLE IF NOT EXISTS Countries (
     ID INT,
     Name VARCHAR(50),
     PRIMARY KEY (ID)
 ) ENGINE=InnoDB;
 
--- 1. Таблица GeoIPCache (Движок MEMORY для максимальной производительности в RAM)
+-- 1. Таблица GeoIPCache (Колонки строго по ТЗ: ID, IPRange, CountryID)
 CREATE TABLE GeoIPCache (
-    ID INT NOT NULL AUTO_INCREMENT,
+    ID INT NOT NULL,
     IPRange VARCHAR(100) NOT NULL,
     CountryID INT NOT NULL,
     PRIMARY KEY (ID)
 ) ENGINE=MEMORY;
 
--- 2. Таблица ProductDescription (Движок InnoDB для защиты данных от потери при перезагрузке)
+-- 2. Таблица ProductDescription (Колонки строго по ТЗ: ID, Description, ProductID, CountryID)
 CREATE TABLE ProductDescription (
-    ID INT NOT NULL AUTO_INCREMENT,
+    ID INT NOT NULL,
     Description TEXT NOT NULL,
     ProductID INT NOT NULL,
     CountryID INT NOT NULL,
     PRIMARY KEY (ID)
 ) ENGINE=InnoDB;
 
--- 3. Таблица Logs (Движок BLACKHOLE: принимает данные, но не сохраняет их)
+-- 3. Таблица Logs (Колонки строго по ТЗ: ID, Timestamp, Message)
+-- Для BLACKHOLE НЕЛЬЗЯ использовать PRIMARY KEY или AUTO_INCREMENT
 CREATE TABLE Logs (
     ID INT NOT NULL,
     Timestamp DATETIME NOT NULL,
     Message TEXT NOT NULL
 ) ENGINE=BLACKHOLE;
 
--- 4. Таблица ProductReporting (Движок CSV: требует NOT NULL для всех полей)
+-- 4. Таблица ProductReporting (Колонки строго по ТЗ: Date, ProductName, Orders)
+-- Для CSV все поля ОБЯЗАНЫ быть NOT NULL
 CREATE TABLE ProductReporting (
     Date DATE NOT NULL,
     ProductName VARCHAR(100) NOT NULL,
