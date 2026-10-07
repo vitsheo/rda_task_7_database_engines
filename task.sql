@@ -1,7 +1,8 @@
--- Убедитесь, что вы подключены к нужной базе данных
+-- Убедитесь, что вы подключены к вашей базе данных ShopDB
 -- USE ShopDB;
 
--- 1. Создание таблицы GeoIPCache с движком MEMORY
+-- 1. Таблица GeoIPCache (Одобрено ментором)
+-- Движок MEMORY для максимальной скорости в RAM, данные могут быть утеряны при перезагрузке.
 CREATE TABLE GeoIPCache (
     ID INT NOT NULL AUTO_INCREMENT,
     IPRange VARCHAR(100) NOT NULL,
@@ -9,28 +10,29 @@ CREATE TABLE GeoIPCache (
     PRIMARY KEY (ID)
 ) ENGINE=MEMORY;
 
--- 2. Создание таблицы ProductDescription с движком MyISAM
+-- 2. Таблица ProductDescription (ИСПРАВЛЕНО на InnoDB)
+-- Движок InnoDB обеспечивает защиту от потери данных при перезагрузке и оптимизирован для чтения.
 CREATE TABLE ProductDescription (
     ID INT NOT NULL AUTO_INCREMENT,
     Description TEXT NOT NULL,
     ProductID INT NOT NULL,
     CountryID INT NOT NULL,
     PRIMARY KEY (ID)
-) ENGINE=MyISAM;
--- 1. Заполняем справочник стран (InnoDB)
-INSERT INTO Countries (ID, Name) VALUES
-(1, 'USA'),
-(2, 'Germany'),
-(3, 'Kazakhstan');
+) ENGINE=InnoDB;
 
--- 2. Заполняем кэш IP-адресов (MEMORY)
-INSERT INTO GeoIPCache (IPRange, CountryID) VALUES
-('192.168.1.0-192.168.1.255', 1),
-('10.0.0.0-10.0.0.255', 2),
-('95.56.0.0-95.57.255.255', 3);
+-- 3. Таблица Logs (ДОБАВЛЕНО)
+-- Движок BLACKHOLE: принимает данные, но ничего не сохраняет на диск.
+CREATE TABLE Logs (
+    ID INT NOT NULL,
+    LogMessage TEXT NOT NULL,
+    LogDate DATETIME NOT NULL
+) ENGINE=BLACKHOLE;
 
--- 3. Заполняем описания товаров на разных языках (MyISAM)
-INSERT INTO ProductDescription (Description, ProductID, CountryID) VALUES
-('Smartphone with great camera', 101, 1),
-('Smartphone mit toller Kamera', 101, 2),
-('Смартфон с отличной камерой', 101, 3);
+-- 4. Таблица ProductReporting (ДОБАВЛЕНО)
+-- Движок CSV: хранит данные в текстовом файле. Все поля должны быть NOT NULL.
+CREATE TABLE ProductReporting (
+    ID INT NOT NULL,
+    ProductName VARCHAR(100) NOT NULL,
+    TotalSales INT NOT NULL,
+    ReportDate DATE NOT NULL
+) ENGINE=CSV;
