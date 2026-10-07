@@ -1,9 +1,8 @@
-CREATE DATABASE IF NOT EXISTS ShopDB;
 USE ShopDB;
 
 CREATE TABLE GeoIPCache (
     ID INT,
-    IPRange VARCHAR(100),
+    IPRange VARCHAR(50),
     CountryID INT
 ) ENGINE=MEMORY;
 
@@ -22,6 +21,6 @@ CREATE TABLE Logs (
 
 CREATE TABLE ProductReporting (
     Date DATE NOT NULL,
-    ProductName VARCHAR(100) NOT NULL,
+    ProductName VARCHAR(50) NOT NULL,
     Orders INT NOT NULL
 ) ENGINE=CSV;
