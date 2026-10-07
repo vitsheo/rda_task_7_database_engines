@@ -3,7 +3,7 @@ USE ShopDB;
 
 CREATE TABLE GeoIPCache (
     ID INT,
-    IPRange VARCHAR(50),
+    IPRange VARCHAR(100),
     CountryID INT
 ) ENGINE=MEMORY;
 
@@ -22,6 +22,6 @@ CREATE TABLE Logs (
 
 CREATE TABLE ProductReporting (
     Date DATE NOT NULL,
-    ProductName VARCHAR(50) NOT NULL,
+    ProductName VARCHAR(100) NOT NULL,
     Orders INT NOT NULL
 ) ENGINE=CSV;
