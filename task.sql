@@ -1,31 +1,30 @@
--- 0. Спочатку створюємо саму базу даних і заходимо в неї
+-- Создаем базу данных и переключаемся на неё
 CREATE DATABASE ShopDB;
 USE ShopDB;
 
--- 1. Таблиця GeoIPCache (Движок MEMORY)
+-- 1. Таблица GeoIPCache (Движок MEMORY)
 CREATE TABLE GeoIPCache (
-    ID INT,
-    IPRange VARCHAR(50),
-    CountryID INT
+    ID INT NOT NULL,
+    IPRange VARCHAR(50) NOT NULL,
+    CountryID INT NOT NULL
 ) ENGINE=MEMORY;
 
--- 2. Таблиця ProductDescription (Движок InnoDB)
+-- 2. Таблица ProductDescription (Движок InnoDB, для описания используем чистый TEXT)
 CREATE TABLE ProductDescription (
-    ID INT,
-    Description VARCHAR(50),
-    ProductID INT,
-    CountryID INT
+    ID INT NOT NULL,
+    Description TEXT NOT NULL,
+    ProductID INT NOT NULL,
+    CountryID INT NOT NULL
 ) ENGINE=InnoDB;
 
--- 3. Таблиця Logs (Движок BLACKHOLE)
+-- 3. Таблица Logs (Движок BLACKHOLE)
 CREATE TABLE Logs (
-    ID INT,
-    Timestamp DATETIME,
-    Message VARCHAR(50)
+    ID INT NOT NULL,
+    Timestamp DATETIME NOT NULL,
+    Message VARCHAR(50) NOT NULL
 ) ENGINE=BLACKHOLE;
 
--- 4. Таблиця ProductReporting (Движок CSV)
--- Для CSV обов'язково залишаємо NOT NULL за правилами MySQL
+-- 4. Таблица ProductReporting (Движок CSV)
 CREATE TABLE ProductReporting (
     Date DATE NOT NULL,
     ProductName VARCHAR(50) NOT NULL,
