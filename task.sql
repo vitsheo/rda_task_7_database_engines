@@ -1,8 +1,10 @@
--- ОБОВ'ЯЗКОВО: Обираємо базу даних перед створенням таблиць, щоб тести в CI пройшли успішно
+-- Создаем базу данных, если её еще нет в системе
+CREATE DATABASE IF NOT EXISTS ShopDB;
+
+-- Переключаемся на неё
 USE ShopDB;
 
--- 1. Таблиця GeoIPCache (Одобрено ментором)
--- Движок MEMORY для максимальної швидкості в RAM.
+-- 1. Таблица GeoIPCache (Движок MEMORY для максимальной скорости в RAM)
 CREATE TABLE GeoIPCache (
     ID INT NOT NULL AUTO_INCREMENT,
     IPRange VARCHAR(100) NOT NULL,
@@ -10,8 +12,7 @@ CREATE TABLE GeoIPCache (
     PRIMARY KEY (ID)
 ) ENGINE=MEMORY;
 
--- 2. Таблиця ProductDescription (Виправлено за рев'ю)
--- Движок InnoDB захищає дані від втрати та оптимізований під читання.
+-- 2. Таблица ProductDescription (Движок InnoDB для защиты данных от потери)
 CREATE TABLE ProductDescription (
     ID INT NOT NULL AUTO_INCREMENT,
     Description TEXT NOT NULL,
@@ -20,18 +21,17 @@ CREATE TABLE ProductDescription (
     PRIMARY KEY (ID)
 ) ENGINE=InnoDB;
 
--- 3. Таблиця Logs (Виправлено назви колонок на Message та Timestamp)
--- Движок BLACKHOLE: приймає дані, але нічого не зберігає.
+-- 3. Таблица Logs (Движок BLACKHOLE, колонки Message и Timestamp)
 CREATE TABLE Logs (
     ID INT NOT NULL,
     Message TEXT NOT NULL,
     Timestamp DATETIME NOT NULL
 ) ENGINE=BLACKHOLE;
 
--- 4. Таблиця ProductReporting (Виправлено структуру за рев'ю: Date, ProductName, Orders)
--- Движок CSV: зберігає дані у текстовому файлі. Усі поля мають бути NOT NULL.
+-- 4. Таблица ProductReporting (Движок CSV, колонки Date, ProductName, Orders)
 CREATE TABLE ProductReporting (
     Date DATE NOT NULL,
     ProductName VARCHAR(100) NOT NULL,
     Orders INT NOT NULL
 ) ENGINE=CSV;
+
