@@ -1,4 +1,5 @@
--- Specify the target database for the tables
+-- Create database if it does not exist and switch to it
+CREATE DATABASE IF NOT EXISTS ShopDB;
 USE ShopDB;
 
 -- Create GeoIPCache table with MEMORY engine for maximum performance (data loss on restart is fine)
