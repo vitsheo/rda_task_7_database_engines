@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS ProductDescription (
     ProductID INT,
     CountryID INT,
     PRIMARY KEY (ID)
-) ENGINE=InnoDB;
+) ENGINE=MyISAM;
 
 -- Create Logs table with BLACKHOLE engine to accept data without storing it
 CREATE TABLE IF NOT EXISTS Logs (
