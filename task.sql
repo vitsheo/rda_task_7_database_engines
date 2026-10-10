@@ -1,5 +1,5 @@
 -- Create GeoIPCache table with MEMORY engine for maximum performance (data loss on restart is fine)
-CREATE TABLE GeoIPCache (
+CREATE TABLE IF NOT EXISTS GeoIPCache (
     ID INT,
     IPRange VARCHAR(50),
     CountryID INT,
@@ -7,7 +7,7 @@ CREATE TABLE GeoIPCache (
 ) ENGINE=MEMORY;
 
 -- Create ProductDescription table with InnoDB engine for data protection and high read performance
-CREATE TABLE ProductDescription (
+CREATE TABLE IF NOT EXISTS ProductDescription (
     ID INT,
     Description TEXT,
     ProductID INT,
@@ -16,14 +16,14 @@ CREATE TABLE ProductDescription (
 ) ENGINE=InnoDB;
 
 -- Create Logs table with BLACKHOLE engine to accept data without storing it
-CREATE TABLE Logs (
+CREATE TABLE IF NOT EXISTS Logs (
     ID INT,
     Timestamp TIMESTAMP,
     Message TEXT
 ) ENGINE=BLACKHOLE;
 
 -- Create ProductReporting table with CSV engine to store data as a comma-separated flat file
-CREATE TABLE ProductReporting (
+CREATE TABLE IF NOT EXISTS ProductReporting (
     Date DATE NOT NULL,
     ProductName VARCHAR(100) NOT NULL,
     Orders INT NOT NULL
